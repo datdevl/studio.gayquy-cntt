@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./lg.jpg" type="image/png">
     <title>Studio Gây Quỹ Ảnh — Chuyên nghiệp</title>
     <!-- Google Fonts cho font đẹp -->
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -15,8 +16,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(180deg, rgba(15,15,18,0.25), rgba(15,15,18,0.25)),
-                        url('lg.jpg') center/cover no-repeat fixed;
+             background:
+        /* lớp mờ overlay */
+        linear-gradient(180deg, rgba(15,15,18,0.25), rgba(15,15,18,0.25)),
+
+        /* ảnh bên trái */
+        url('./lg.jpg') left center / 50% 100% no-repeat,
+
+        /* ảnh bên phải */
+        url('lg.jpg') right center / 50% 100% no-repeat;
+
+    background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
             color: #eaeaf2;
@@ -138,17 +148,6 @@
         .filter-name { font-size: 0.85em; font-weight: 600; color: #b8b8c5; margin-bottom: 8px; }
         .filter-item button { width: 100%; padding: 10px; font-size: 0.9em; margin: 0; }
 
-        /* Original Preview in Grid */
-        .original-preview {
-            text-align: center;
-            margin: 20px 0;
-            display: none;
-        }
-        .original-preview img { max-width: 220px; max-height: 260px; border-radius: 12px; box-shadow: 0 14px 30px rgba(0,0,0,0.18); object-fit: contain; }
-        .original-preview h4 {
-            color: #f5576c;
-            margin-top: 10px;
-        }
 
         /* Form */
         #formSection { background: rgba(255,255,255,0.08); padding: 18px; border-radius: 16px; margin: 20px 0; display: none; border: 1px solid rgba(255,255,255,0.12); }
@@ -190,8 +189,28 @@
         }
         .reveal { opacity: 0; transform: translateY(14px); transition: opacity .4s ease, transform .4s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* QR cố định góc phải */
+        .qr-fixed {
+            position: fixed;
+            bottom: 20px;     /* cách đáy */
+            right: 20px;      /* cách mép phải */
+            width: 95px;      /* kích thước QR */
+            height: auto;
+            border-radius: 12px;
+            opacity: 0.92;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .qr-fixed:hover {
+            transform: scale(1.07);
+            opacity: 1;
+        }
+
     </style>
 </head>
+<img src="./qr.png" class="qr-fixed" alt="QR Code">
 <body>
     <div class="container">
         <div class="brand">
@@ -221,10 +240,7 @@
         
         <div id="filtersGrid" class="filters-grid"></div>
         
-        <div id="originalPreview" class="original-preview">
-            <h4>Ảnh Gốc (Để So Sánh)</h4>
-            <img id="originalImg" src="" alt="Gốc">
-        </div>
+        
         
         <div id="formSection">
             <h3 style="text-align: center; margin-bottom: 20px;">Chia sẻ kỷ niệm</h3>
@@ -257,71 +273,76 @@
         const nextSetBtn = document.getElementById('nextSetBtn');
         const setInfo = document.getElementById('setInfo');
         const currentSetSpan = document.getElementById('currentSet');
-        const originalPreview = document.getElementById('originalPreview');
-        const originalImg = document.getElementById('originalImg');
+        
 
         // EmailJS - THAY BẰNG KEY CỦA BẠN
-        emailjs.init('YOUR_USER_ID');  // User ID từ EmailJS
+        emailjs.init('template_ecf93dw');  // User ID từ EmailJS
 
         // 50 filter màu đẹp mới (tránh artifact, tập trung màu dịu dàng, đẹp hơn)
         function initFilters() {
-            allFilters = [
-                // Bộ 1: Warm & Soft
-                { name: 'Warm Glow', filter: 'sepia(30%) saturate(110%) contrast(105%) brightness(102%) hue-rotate(5deg)' },
-                { name: 'Rose Whisper', filter: 'sepia(25%) saturate(115%) contrast(108%) brightness(98%) hue-rotate(350deg)' },
-                { name: 'Sunlit Peach', filter: 'saturate(120%) contrast(110%) brightness(105%) hue-rotate(15deg)' },
-                { name: 'Golden Soft', filter: 'saturate(105%) contrast(102%) brightness(108%) hue-rotate(45deg) sepia(15%)' },
-                { name: 'Amber Dream', filter: 'sepia(35%) saturate(108%) contrast(106%) brightness(100%) hue-rotate(25deg)' },
-                { name: 'Blush Dawn', filter: 'saturate(112%) contrast(107%) brightness(103%) hue-rotate(0deg)' },
-                { name: 'Caramel Haze', filter: 'sepia(40%) saturate(102%) contrast(104%) brightness(97%) hue-rotate(20deg)' },
-                { name: 'Sunbeam', filter: 'saturate(118%) contrast(109%) brightness(106%) hue-rotate(40deg)' },
-                { name: 'Pink Horizon', filter: 'saturate(125%) contrast(112%) brightness(101%) hue-rotate(355deg)' },
-                { name: 'Honey Tint', filter: 'sepia(28%) saturate(106%) contrast(103%) brightness(104%) hue-rotate(30deg)' },
-                // Bộ 2: Cool & Serene
-                { name: 'Blue Serenity', filter: 'saturate(108%) contrast(104%) brightness(103%) hue-rotate(195deg)' },
-                { name: 'Teal Mist', filter: 'saturate(113%) contrast(106%) brightness(99%) hue-rotate(185deg)' },
-                { name: 'Lavender Calm', filter: 'saturate(104%) contrast(101%) brightness(102%) hue-rotate(265deg)' },
-                { name: 'Sky Gentle', filter: 'saturate(116%) contrast(108%) brightness(104%) hue-rotate(205deg)' },
-                { name: 'Mint Breeze', filter: 'saturate(109%) contrast(105%) brightness(100%) hue-rotate(165deg)' },
-                { name: 'Indigo Soft', filter: 'saturate(111%) contrast(103%) brightness(101%) hue-rotate(245deg)' },
-                { name: 'Aqua Whisper', filter: 'saturate(114%) contrast(107%) brightness(106%) hue-rotate(175deg)' },
-                { name: 'Purple Hush', filter: 'saturate(107%) contrast(102%) brightness(98%) hue-rotate(275deg)' },
-                { name: 'Cool Dawn', filter: 'saturate(119%) contrast(110%) brightness(105%) hue-rotate(215deg)' },
-                { name: 'Ice Whisper', filter: 'saturate(103%) contrast(100%) brightness(107%) hue-rotate(220deg) sepia(5%)' },
-                // Bộ 3: Nature & Earth
-                { name: 'Earth Green', filter: 'saturate(106%) contrast(103%) brightness(101%) hue-rotate(135deg)' },
-                { name: 'Sage Harmony', filter: 'saturate(121%) contrast(109%) brightness(104%) hue-rotate(145deg)' },
-                { name: 'Lime Soft', filter: 'saturate(117%) contrast(106%) brightness(103%) hue-rotate(125deg)' },
-                { name: 'Forest Calm', filter: 'saturate(112%) contrast(104%) brightness(99%) hue-rotate(155deg)' },
-                { name: 'Olive Peace', filter: 'sepia(15%) saturate(110%) contrast(105%) brightness(102%) hue-rotate(150deg)' },
-                { name: 'Meadow Glow', filter: 'saturate(124%) contrast(111%) brightness(106%) hue-rotate(130deg)' },
-                { name: 'Ever Soft', filter: 'saturate(115%) contrast(107%) brightness(100%) hue-rotate(140deg)' },
-                { name: 'Pistachio Dream', filter: 'saturate(122%) contrast(108%) brightness(105%) hue-rotate(115deg)' },
-                { name: 'Verdant Haze', filter: 'saturate(119%) contrast(110%) brightness(101%) hue-rotate(160deg)' },
-                { name: 'Green Whisper', filter: 'saturate(107%) contrast(102%) brightness(104%) hue-rotate(120deg)' },
-                // Bộ 4: Vibrant & Joyful
-                { name: 'Coral Joy', filter: 'saturate(126%) contrast(113%) brightness(107%) hue-rotate(10deg)' },
-                { name: 'Berry Delight', filter: 'saturate(131%) contrast(114%) brightness(106%) hue-rotate(315deg)' },
-                { name: 'Citrus Spark', filter: 'saturate(128%) contrast(112%) brightness(109%) hue-rotate(55deg)' },
-                { name: 'Magenta Bliss', filter: 'saturate(133%) contrast(115%) brightness(104%) hue-rotate(285deg)' },
-                { name: 'Tangerine', filter: 'saturate(127%) contrast(111%) brightness(108%) hue-rotate(25deg)' },
-                { name: 'Plum Pop', filter: 'saturate(132%) contrast(116%) brightness(103%) hue-rotate(305deg)' },
-                { name: 'Lemon Zest', filter: 'saturate(129%) contrast(113%) brightness(110%) hue-rotate(65deg)' },
-                { name: 'Ruby Radiance', filter: 'saturate(134%) contrast(117%) brightness(105%) hue-rotate(335deg)' },
-                { name: 'Vivid Lime', filter: 'saturate(136%) contrast(118%) brightness(102%) hue-rotate(105deg)' },
-                { name: 'Saffron Glow', filter: 'saturate(125%) contrast(112%) brightness(107%) hue-rotate(45deg)' },
-                // Bộ 5: Elegant & Muted
-                { name: 'Pearl Elegance', filter: 'saturate(96%) contrast(98%) brightness(103%) sepia(10%)' },
-                { name: 'Silk Soft', filter: 'saturate(99%) contrast(99%) brightness(101%) hue-rotate(5deg)' },
-                { name: 'Velvet Mute', filter: 'saturate(94%) contrast(97%) brightness(99%) sepia(20%)' },
-                { name: 'Chiffon', filter: 'saturate(101%) contrast(100%) brightness(102%) hue-rotate(350deg)' },
-                { name: 'Dune Sand', filter: 'saturate(97%) contrast(96%) brightness(100%) hue-rotate(35deg) sepia(15%)' },
-                { name: 'Mist Gray', filter: 'saturate(92%) contrast(95%) brightness(104%) grayscale(10%)' },
-                { name: 'Linen Fade', filter: 'saturate(98%) contrast(98%) brightness(101%) sepia(8%)' },
-                { name: 'Whisper Taupe', filter: 'saturate(95%) contrast(99%) brightness(103%) hue-rotate(20deg)' },
-                { name: 'Slate Gentle', filter: 'saturate(93%) contrast(97%) brightness(102%) hue-rotate(240deg) sepia(5%)' },
-                { name: 'Ivory Grace', filter: 'saturate(100%) contrast(100%) brightness(105%) sepia(12%)' }
-            ];
+           allFilters = [
+
+    // 🎬 BỘ 1: CINEMATIC PREMIUM
+    { name: 'Cine Teal Orange Pro', filter: 'contrast(128%) brightness(103%) saturate(140%) hue-rotate(18deg)' },
+    { name: 'Cine Deep Indigo', filter: 'contrast(120%) brightness(95%) saturate(115%) hue-rotate(210deg)' },
+    { name: 'Cine Dark Fade', filter: 'contrast(140%) brightness(88%) saturate(90%) sepia(10%)' },
+    { name: 'Cine Olive Shadows', filter: 'contrast(115%) brightness(94%) hue-rotate(150deg) saturate(130%)' },
+    { name: 'Cine Silver Blue', filter: 'contrast(122%) brightness(101%) saturate(118%) hue-rotate(190deg)' },
+    { name: 'Cine Gold Warm', filter: 'contrast(112%) saturate(120%) brightness(107%) sepia(20%)' },
+    { name: 'Cine Urban Matte', filter: 'contrast(104%) brightness(93%) saturate(80%) grayscale(15%)' },
+    { name: 'Cine Vintage Bronze', filter: 'contrast(115%) brightness(96%) sepia(35%) saturate(120%)' },
+    { name: 'Cine Cold Night', filter: 'contrast(135%) brightness(90%) hue-rotate(240deg)' },
+    { name: 'Cine Highlight Glow', filter: 'contrast(112%) brightness(115%) saturate(130%)' },
+
+    // 🌸 BỘ 2: PASTEL DREAM
+    { name: 'Pastel Peach Dream', filter: 'brightness(115%) saturate(135%) hue-rotate(12deg)' },
+    { name: 'Pastel Aqua Wash', filter: 'brightness(120%) saturate(118%) hue-rotate(185deg)' },
+    { name: 'Pastel Cloud Pink', filter: 'brightness(117%) saturate(130%) hue-rotate(350deg)' },
+    { name: 'Pastel Cream Rose', filter: 'brightness(112%) saturate(110%) sepia(8%) hue-rotate(5deg)' },
+    { name: 'Pastel Lemon Fade', filter: 'brightness(125%) saturate(140%) hue-rotate(70deg)' },
+    { name: 'Pastel Mint Breeze', filter: 'brightness(118%) saturate(122%) hue-rotate(155deg)' },
+    { name: 'Pastel Sky Glow', filter: 'brightness(120%) saturate(115%) hue-rotate(200deg)' },
+    { name: 'Pastel Soft Violet', filter: 'brightness(115%) saturate(110%) hue-rotate(260deg)' },
+    { name: 'Pastel Smooth Blue', filter: 'brightness(123%) saturate(112%) hue-rotate(210deg)' },
+    { name: 'Pastel Candy Glow', filter: 'brightness(118%) saturate(140%) hue-rotate(350deg)' },
+
+    // 🌈 BỘ 3: VIBRANT POP (RỰC RỠ – BẮT MẮT)
+    { name: 'Vivid Scarlet', filter: 'saturate(160%) contrast(125%) brightness(104%) hue-rotate(355deg)' },
+    { name: 'Vivid Ocean', filter: 'saturate(155%) contrast(120%) brightness(103%) hue-rotate(200deg)' },
+    { name: 'Vivid Sunburst', filter: 'saturate(150%) contrast(115%) brightness(109%) hue-rotate(45deg)' },
+    { name: 'Vivid Emerald', filter: 'saturate(165%) contrast(118%) brightness(105%) hue-rotate(120deg)' },
+    { name: 'Vivid Magenta', filter: 'saturate(175%) contrast(122%) brightness(102%) hue-rotate(295deg)' },
+    { name: 'Vivid Cyber Lime', filter: 'saturate(180%) contrast(120%) brightness(108%) hue-rotate(90deg)' },
+    { name: 'Vivid Purple Pop', filter: 'saturate(165%) contrast(118%) brightness(104%) hue-rotate(260deg)' },
+    { name: 'Vivid Sunrise', filter: 'saturate(150%) contrast(117%) brightness(110%) hue-rotate(25deg)' },
+    { name: 'Vivid Tropical', filter: 'saturate(170%) contrast(118%) brightness(107%) hue-rotate(145deg)' },
+    { name: 'Vivid Rainbow', filter: 'saturate(185%) contrast(125%) brightness(103%)' },
+
+    // 🌧️ BỘ 4: MOODY ART (SÂU – NGHỆ – TỐI)
+    { name: 'Moody Matte Black', filter: 'contrast(85%) brightness(85%) saturate(50%) grayscale(25%)' },
+    { name: 'Moody Dark Forest', filter: 'contrast(130%) brightness(88%) hue-rotate(150deg) saturate(75%)' },
+    { name: 'Moody Ink Navy', filter: 'contrast(122%) brightness(90%) hue-rotate(220deg)' },
+    { name: 'Moody Soft Shadow', filter: 'brightness(92%) contrast(110%) grayscale(20%)' },
+    { name: 'Moody Warm Fade', filter: 'contrast(115%) brightness(95%) sepia(20%) saturate(90%)' },
+    { name: 'Moody Fog Gray', filter: 'brightness(105%) saturate(80%) grayscale(15%)' },
+    { name: 'Moody Deep Violet', filter: 'contrast(130%) brightness(88%) hue-rotate(280deg)' },
+    { name: 'Moody Charcoal', filter: 'contrast(140%) brightness(83%) saturate(70%) grayscale(18%)' },
+    { name: 'Moody Bronze', filter: 'contrast(122%) brightness(94%) sepia(30%)' },
+    { name: 'Moody Night Fade', filter: 'contrast(120%) brightness(90%) hue-rotate(250deg)' },
+
+    // ☀️ BỘ 5: GOLDEN GLOW (ÁNH VÀNG SANG TRỌNG)
+    { name: 'Gold Shine Premium', filter: 'sepia(35%) saturate(145%) brightness(107%) hue-rotate(18deg)' },
+    { name: 'Golden Hour Ultra', filter: 'sepia(45%) saturate(135%) brightness(113%) hue-rotate(12deg)' },
+    { name: 'Amber Honey', filter: 'sepia(30%) saturate(130%) brightness(110%) hue-rotate(30deg)' },
+    { name: 'Champagne Glow', filter: 'sepia(18%) saturate(115%) brightness(109%)' },
+    { name: 'Royal Gold Max', filter: 'sepia(55%) saturate(145%) brightness(102%)' },
+    { name: 'Warm Cream Soft', filter: 'sepia(15%) brightness(116%) saturate(110%)' },
+    { name: 'Golden Film Pro', filter: 'sepia(40%) contrast(112%) brightness(103%)' },
+    { name: 'Soft Sunset Gold', filter: 'saturate(115%) brightness(110%) hue-rotate(22deg)' },
+    { name: 'Amber Vintage', filter: 'sepia(35%) saturate(130%) brightness(96%) contrast(112%)' },
+    { name: 'Ivory Gold', filter: 'sepia(25%) saturate(105%) brightness(115%)' },
+];
+
         }
 
         // Hiển thị status
@@ -350,7 +371,6 @@
             currentSet = 0;
             filtersGrid.innerHTML = '';
             filtersGrid.style.display = 'none';
-            originalPreview.style.display = 'none';
             setInfo.style.display = 'none';
             nextSetBtn.style.display = 'none';
             document.getElementById('formSection').style.display = 'none';
@@ -412,15 +432,28 @@
             ctx.fillRect(0, canvas.height - stripHeight, canvas.width, stripHeight);
 
             // Thêm chữ mờ (font đẹp, center, shadow để mờ)
-            ctx.font = 'bold 15px "Playfair Display", serif';
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';  // Chữ đen mờ hơn
+            // Style chữ + đổ bóng
+            ctx.font = 'bold 19px "Playfair Display", serif';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.9)'; // Chữ đen đậm, dễ đọc
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';  // Shadow trắng để mờ nhẹ
-            ctx.shadowBlur = 3;
-            const text = 'DNU - KHOA CÔNG NGHỆ THÔNG TIN KÍNH TẶNG ! | XIN CẢM ƠN TẤM LÒNG CỦA BẠN VÌ CHƯƠNG TRÌNH GÂY QUỸ THIỆN NGUYỆN VÙNG CAO ';
+
+            // Đổ bóng chuyên nghiệp
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';   // Bóng đen nhẹ
+            ctx.shadowBlur = 4;                        // Độ mờ
+            ctx.shadowOffsetX = 2;                     // Lệch ngang
+            ctx.shadowOffsetY = 2;                     // Lệch dọc
+
+            const text =
+                'KHOA CNTT - DNU KÍNH TẶNG! CẢM ƠN BẠN ĐÃ ĐỒNG HÀNH CÙNG CHƯƠNG TRÌNH GÂY QUỸ THIỆN NGUYỆN VÙNG CAO 2025';
+
             ctx.fillText(text, canvas.width / 2, canvas.height - stripHeight / 2);
-            ctx.shadowBlur = 0;  // Reset shadow
+
+            // Reset shadow sau khi vẽ
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+
         }
 
         // Generate 10 filter từ bộ hiện tại
@@ -433,9 +466,7 @@
 
             const currentFilters = allFilters.slice(currentSet * 10, (currentSet + 1) * 10);
 
-            // Hiển thị ảnh gốc để so sánh (kích thước gốc)
-            originalImg.src = originalDataURL;
-            originalPreview.style.display = 'block';
+            
 
             currentFilters.forEach((filter) => {
                 const canvas = document.createElement('canvas');
