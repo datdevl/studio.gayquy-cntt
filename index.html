@@ -217,7 +217,7 @@
             <img src="lg.jpg" alt="Logo" class="logo">
             <h1>STUDIO Gây Quỹ | DAI NAM UNI</h1>
         </div>
-        <p class="intro">Upload ảnh, tạo ngay 10 filter màu đẹp lung linh. Nâng cao chất lượng, kỷ niệm rực rỡ cho người ủng hộ! ✨</p>
+        <p class="intro">Upload ảnh, tạo ngay ảnh đẹp lung linh. Nâng cao chất lượng, kỷ niệm rực rỡ cho người ủng hộ! ✨</p>
         
         <div class="upload-area" onclick="document.getElementById('fileInput').click()">
             <p>Chọn ảnh để bắt đầu</p>
@@ -250,8 +250,8 @@
             <div class="form-group">
                 <input type="email" id="donorEmail" placeholder="Email nhận ảnh" required>
             </div>
-            <button onclick="downloadAll()">📦 Tải Bộ ZIP</button>
-            <button onclick="sendSelected()">📧 Gửi Ảnh Chọn</button>
+            <button onclick="downloadAll()">📦 Tải Toàn Bộ Ảnh</button>
+            <button onclick="sendSelected()">📧 Gửi Thông Báo</button>
         </div>
         
         <div id="status"></div>
@@ -276,7 +276,7 @@
         
 
         // EmailJS - THAY BẰNG KEY CỦA BẠN
-        emailjs.init('template_ecf93dw');  // User ID từ EmailJS
+        emailjs.init('WMR-hVI4x19gyn3uT');  // User ID từ EmailJS
 
         // 50 filter màu đẹp mới (tránh artifact, tập trung màu dịu dàng, đẹp hơn)
         function initFilters() {
@@ -603,42 +603,41 @@
         }
 
         // Gửi email filter chọn
-        async function sendSelected() {
-            const name = document.getElementById('donorName').value.trim();
-            const email = document.getElementById('donorEmail').value.trim();
-            if (!name || !email) {
-                showStatus('Vui lòng nhập đầy đủ thông tin!', true);
-                return;
-            }
-            if (!selectedFilter) {
-                showStatus('Vui lòng chọn một ảnh từ grid!', true);
-                return;
-            }
+        // Cập nhật hàm sendSelected (thay thế hàm cũ) - Chỉ gửi thông báo, không ảnh
+async function sendSelected() {
+    const name = document.getElementById('donorName').value.trim();
+    const email = document.getElementById('donorEmail').value.trim();
+    if (!name || !email) {
+        showStatus('Vui lòng nhập đầy đủ thông tin!', true);
+        return;
+    }
+    if (!selectedFilter) {
+        showStatus('Vui lòng chọn một ảnh từ grid để ghi nhận!', true);
+        return;
+    }
 
-            const dataURL = filterImages[selectedFilter];
-            if (!dataURL) {
-                showStatus('Không tìm thấy ảnh chọn!', true);
-                return;
-            }
-            const base64Image = dataURL.split(',')[1];
-            const templateParams = {
-                to_email: email,
-                donor_name: name,
-                message: `Cảm ơn ${name} đã ủng hộ! Đây là ảnh "${selectedFilter}" từ bộ màu đẹp đặc biệt. 😊`,
-                attachment: base64Image
-            };
+    showProgress(true);  // Hiển thị loading
+    try {
+        // Chỉ gửi thông báo, không attachment
+        const templateParams = {
+            to_email: email,
+            donor_name: name,
+            message: `Cảm ơn ${name} đã ủng hộ chương trình gây quỹ! Bạn đã chọn filter "${selectedFilter}" từ bộ màu đẹp. Vui lòng IB Zalo: 0345335303 để nhận ảnh (nút 📦 Tải Bộ ZIP hoặc 💾 Tải riêng). Chúng tôi sẽ gửi thêm cập nhật nếu cần. 😊 Kính chào, Studio Gây Quỹ - DAI NAM UNI.`
+            // Bỏ 'attachment' để tránh lỗi size
+        };
 
-            try {
-                await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
-                showStatus(`Gửi thành công "${selectedFilter}" cho ${name}! 🎊`);
-                document.getElementById('donorName').value = '';
-                document.getElementById('donorEmail').value = '';
-                selectedFilter = null;
-            } catch (error) {
-                showStatus('Lỗi gửi email: ' + (error.text || error.message), true);
-                console.error(error);
-            }
-        }
+        await emailjs.send('service_h9b0zrm', 'template_ecf93dw', templateParams);
+        showStatus(`Gửi thông báo thành công cho ${name}! (Không đính kèm ảnh) 🎊`);
+        document.getElementById('donorName').value = '';
+        document.getElementById('donorEmail').value = '';
+        selectedFilter = null;
+    } catch (error) {
+        showStatus('Lỗi gửi email: ' + (error.text || error.message), true);
+        console.error(error);
+    } finally {
+        showProgress(false);
+    }
+}
         function setupReveal() {
             const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
