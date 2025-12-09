@@ -12,6 +12,27 @@
     <!-- EmailJS cho gửi email -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
+        /* Hiệu ứng loading cho nút */
+        button.loading-btn {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        button.loading-btn::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            border: 3px solid transparent;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
         /* Reset & Base */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -458,6 +479,10 @@
 
         // Generate 10 filter từ bộ hiện tại
         function generateFilters() {
+             generateBtn.classList.add("loading-btn"); // 🔥 Bật hiệu ứng loading
+            progress.style.display = "block";
+
+            setTimeout(() => {
             if (!originalImage || !originalDataURL || allFilters.length === 0) return;
             showProgress(true);
             filtersGrid.innerHTML = '';
@@ -544,6 +569,9 @@
                     }
                 }
             });
+            
+                generateBtn.classList.remove("loading-btn"); // 🔥 Tắt loading
+            }, 200);
         }
 
         // Chuyển bộ tiếp theo
