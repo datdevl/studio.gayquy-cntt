@@ -4,86 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./lg.jpg" type="image/png">
-    <title>Studio Gây Quỹ Ảnh — Chuyên nghiệp</title>
-    <!-- Google Fonts cho font đẹp -->
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- JSZip cho tải ZIP -->
+    <title>Studio Gây Quỹ  — FauTaubooth </title>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- EmailJS cho gửi email -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
-        /* Hiệu ứng loading cho nút */
-        button.loading-btn {
-            position: relative;
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        button.loading-btn::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 18px;
-            height: 18px;
-            border: 3px solid transparent;
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Reset & Base */
+        button.loading-btn { position: relative; pointer-events: none; opacity: 0.7; }
+        button.loading-btn::after { content: ""; position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border: 3px solid transparent; border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; transform: translate(-50%, -50%); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Arial, Helvetica, sans-serif;
-             background:
-        /* lớp mờ overlay */
-        linear-gradient(180deg, rgba(15,15,18,0.25), rgba(15,15,18,0.25)),
-
-        /* ảnh bên trái */
-        url('./lg.jpg') left center / 50% 100% no-repeat,
-
-        /* ảnh bên phải */
-        url('lg.jpg') right center / 50% 100% no-repeat;
-
-    background-attachment: fixed;
+            background: linear-gradient(180deg, rgba(15,15,18,0.25), rgba(15,15,18,0.25)),
+                        url('./lg.jpg') left center / 50% 100% no-repeat,
+                        url('./lg.jpg') right center / 50% 100% no-repeat;
+            background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
             color: #eaeaf2;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
         }
-        h1 {
-            font-family: 'Andale Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(2em, 5.5vw, 3.6em);
-            color: #ffffff;
-            letter-spacing: 0.6px;
-            margin-bottom: 12px;
-            animation: fadeInDown 0.8s ease-out;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
-        }
+        h1 { font-family: 'Andale Mono', monospace; font-weight: 700; font-size: clamp(2em, 5.5vw, 3.6em); color: #ffffff; letter-spacing: 0.6px; margin-bottom: 12px; text-shadow: 0 2px 8px rgba(0,0,0,0.35); animation: fadeInDown 0.8s ease-out; }
         .brand { display: flex; align-items: center; gap: 14px; }
         .logo { width: 56px; height: 56px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 12px 28px rgba(0,0,0,0.35); }
         @media (max-width: 768px) { .logo { width: 44px; height: 44px; } }
-        h2, h3 {
-            font-family: 'DM Serif Display', serif;
-            letter-spacing: 0.2px;
-        }
-        p.intro {
-            font-size: 1.05em;
-            color: #fff;
-            margin-bottom: 28px;
-            opacity: 0.92;
-            letter-spacing: 0.2px;
-            font-weight: 400;
-            animation: fadeInUp 1s ease-out 0.5s both;
-        }
-
-        /* Container chính */
+        p.intro { font-size: 1.05em; color: #fff; margin-bottom: 28px; opacity: 0.92; letter-spacing: 0.2px; font-weight: 400; animation: fadeInUp 1s ease-out 0.5s both; }
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -95,305 +39,305 @@
             border: 1px solid rgba(255,255,255,0.12);
             animation: fadeIn 0.8s ease-out;
         }
-
-        /* Upload Area */
         .upload-area {
             border: 2px dashed rgba(255,255,255,0.25);
             border-radius: 16px;
             padding: 32px;
             margin: 30px 0;
             cursor: pointer;
-            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-            position: relative;
-            overflow: hidden;
             text-align: center;
+            transition: all 0.2s ease;
         }
-        .upload-area:hover {
-            border-color: #f5576c;
-            transform: scale(1.01);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-        }
+        .upload-area:hover { border-color: #f5576c; transform: scale(1.01); }
         .upload-area.dragging { border-color: #8a8aff; transform: scale(1.02); }
         .upload-area::before { content: '📸'; font-size: 2.4em; display: block; margin-bottom: 10px; }
-        .upload-area p { font-size: 1.1em; color: #eaeaf2; }
-        .upload-area small { font-size: 0.9em; color: #b8b8c5; }
         input[type="file"] { display: none; }
-
-        /* Preview & Buttons */
-        .preview {
-            max-width: 100%;
-            max-height: 380px;
-            border-radius: 16px;
-            margin: 18px auto;
-            display: none;
-            box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-            transition: transform 0.2s ease;
-            object-fit: contain;
-        }
-        .preview:hover { transform: scale(1.02); }
+        .preview { max-width: 100%; max-height: 600px; border-radius: 16px; margin: 18px auto; display: none; box-shadow: 0 18px 40px rgba(0,0,0,0.25); object-fit: contain; }
         button {
             background: linear-gradient(135deg, #f5576c, #6c7cff);
             color: #fff;
             border: 0;
             padding: 12px 18px;
             border-radius: 12px;
-            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             margin: 8px 5px;
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            transition: all 0.18s ease;
             box-shadow: 0 10px 24px rgba(0,0,0,0.18);
         }
         button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,0.22); }
-        button:disabled { background: #656b7a; cursor: not-allowed; transform: none; box-shadow: none; }
-        #resetBtn, #nextSetBtn {
-            background: #6c757d !important;
-            margin-left: 10px;
+        button:disabled { background: #656b7a; cursor: not-allowed; }
+        #resetBtn, #nextSetBtn { background: #6c757d !important; }
+        #setInfo { font-weight: bold; color: #f5576c; margin: 10px 0; }
+        .filters-grid, .frames-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 30px 0; display: none; }
+        .filter-item, .frame-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            transition: all 0.18s ease;
+            border: 1px solid rgba(255,255,255,0.12);
         }
-        #nextSetBtn:hover {
-            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4) !important;
-        }
-        #setInfo {
-            font-weight: bold;
-            color: #f5576c;
-            margin: 10px 0;
-        }
-
-        /* Grid Filter - Masonry Style cho 10 ảnh */
-        .filters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 30px 0; display: none; }
-        .filter-item { background: rgba(255,255,255,0.08); border-radius: 16px; padding: 14px; box-shadow: 0 18px 40px rgba(0,0,0,0.2); transition: transform 0.18s ease, box-shadow 0.18s ease; text-align: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); }
-        .filter-item:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 20px 44px rgba(0,0,0,0.24); }
-        .filter-img { width: 100%; height: auto; max-height: 260px; object-fit: contain; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: transform 0.2s ease; }
-        .filter-img:hover { transform: scale(1.03); }
-        .filter-name { font-size: 0.85em; font-weight: 600; color: #b8b8c5; margin-bottom: 8px; }
-        .filter-item button { width: 100%; padding: 10px; font-size: 0.9em; margin: 0; }
-
-
-        /* Form */
+        .filter-item:hover, .frame-item:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 20px 44px rgba(0,0,0,0.24); }
+        .filter-img, .frame-preview { width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 12px; margin-bottom: 8px; cursor: pointer; }
+        .frame-preview { max-height: 340px; }
+        #stripPreview { max-height: 800px; }
         #formSection { background: rgba(255,255,255,0.08); padding: 18px; border-radius: 16px; margin: 20px 0; display: none; border: 1px solid rgba(255,255,255,0.12); }
-        .form-group {
-            margin: 15px 0;
-            text-align: left;
-        }
-        input[type="text"], input[type="email"] { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; font-size: 1em; transition: border-color 0.3s ease; background: transparent; color: #eaeaf2; }
+        input[type="text"], input[type="email"] { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; background: transparent; color: #eaeaf2; }
         input:focus { outline: none; border-color: #f5576c; }
-
-        /* Status & Progress */
-        #status, #progress { margin: 15px 0; font-weight: 600; min-height: 20px; padding: 10px; border-radius: 10px; }
+        #status { margin: 15px 0; font-weight: 600; padding: 10px; border-radius: 10px; }
         .success { background: rgba(22,163,74,0.15); color: #12b35b; }
         .error { background: rgba(220,38,38,0.15); color: #ef4444; }
-        .loading { text-align: center; }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #f5576c;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #f5576c; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Animations */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { padding: 20px; }
-            .filters-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
-            button { padding: 12px 16px; font-size: 0.95em; }
-            .filter-img { max-height: 200px; }
-            .original-preview img { max-height: 200px; }
-        }
         .reveal { opacity: 0; transform: translateY(14px); transition: opacity .4s ease, transform .4s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-    /* QR cố định góc phải */
-        .qr-fixed {
-            position: fixed;
-            bottom: 20px;     /* cách đáy */
-            right: 20px;      /* cách mép phải */
-            width: 95px;      /* kích thước QR */
-            height: auto;
-            border-radius: 12px;
-            opacity: 0.92;
-            z-index: 9999;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-            transition: transform 0.2s ease, opacity 0.2s ease;
+        .qr-fixed { position: fixed; bottom: 20px; right: 20px; width: 95px; border-radius: 12px; opacity: 0.92; z-index: 9999; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
+        .qr-fixed:hover { transform: scale(1.07); opacity: 1; }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .filters-grid, .frames-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+            .filter-img { max-height: 220px; }
+            .frame-preview { max-height: 260px; }
+            #stripPreview { max-height: 600px; }
         }
-
-        .qr-fixed:hover {
-            transform: scale(1.07);
-            opacity: 1;
-        }
-
     </style>
 </head>
-<img src="./qr.png" class="qr-fixed" alt="QR Code">
 <body>
+    <img src="./qr.png" class="qr-fixed" alt="QR Code">
+
     <div class="container">
         <div class="brand">
             <img src="lg.jpg" alt="Logo" class="logo">
-            <h1>STUDIO Gây Quỹ | DAI NAM UNI</h1>
+            <h1>Photobooth Gây Quỹ | DAI NAM UNI</h1>
         </div>
-        <p class="intro">Upload ảnh, tạo ngay ảnh đẹp lung linh. Nâng cao chất lượng, kỷ niệm rực rỡ cho người ủng hộ! ✨</p>
-        
+        <h6 style="text-align:right">Version 2.0</h6>
+        <p class="intro">Upload ảnh, tạo ngay ảnh photobooth đẹp lung linh <3 đừng quên ủng hộ chúng mình ở góc phải màn hình✨</p>
+
         <div class="upload-area" onclick="document.getElementById('fileInput').click()">
             <p>Chọn ảnh để bắt đầu</p>
-            <small>Hỗ trợ JPG/PNG, < 5MB</small>
+            <small>Hỗ trợ JPG/PNG/CR2 < 10MB</small>
         </div>
-        <input type="file" id="fileInput" accept="image/*" onchange="loadImage(event)">
-        
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/cr2" onchange="loadImage(event)">
+
         <img id="preview" class="preview" style="display: none;">
-        
-        <button id="generateBtn" onclick="generateFilters()" disabled>Tạo 10 Filter Màu Đẹp</button>
+
+        <button id="generateBtn" onclick="generateFilters()" disabled>Tạo ngay ...</button>
         <button id="resetBtn" onclick="resetApp()" style="display: none;">🔄 Reset</button>
-        
+
         <div id="progress" class="loading" style="display: none;">
             <div class="spinner"></div>
-            <p>Đang tạo filter... Vui lòng chờ!</p>
+            <p>Đang tạo 4 filter... Vui lòng chờ!</p>
         </div>
-        
-        <div id="setInfo" style="display: none;">Bộ hiện tại: <span id="currentSet">1</span>/5 (50 filter tổng)</div>
+
+        <div id="setInfo" style="display: none;">Bộ hiện tại: <span id="currentSet">1</span>/13 (50 filter tổng)</div>
         <button id="nextSetBtn" onclick="nextFilterSet()" style="display: none;">➡️ Bộ Tiếp Theo</button>
-        
+
         <div id="filtersGrid" class="filters-grid"></div>
-        
-        
-        
+        <button id="generateStripBtn" onclick="generatePhotoboothStrip()" style="display: none; width: 100%; margin-bottom: 20px;">🎠 Chọn Mẫu Photobooth dưới đây!</button>
+        <img id="stripPreview" class="preview" style="display: none;" alt="Photobooth Strip Preview">
+        <div id="framesGrid" class="frames-grid"></div>
+
         <div id="formSection">
             <h3 style="text-align: center; margin-bottom: 20px;">Chia sẻ kỷ niệm</h3>
-            <div class="form-group">
-                <input type="text" id="donorName" placeholder="Tên người ủng hộ" required>
-            </div>
-            <div class="form-group">
-                <input type="email" id="donorEmail" placeholder="Email nhận ảnh" required>
-            </div>
+            <div class="form-group"><input type="text" id="donorName" placeholder="Tên người ủng hộ" required></div>
+            <div class="form-group"><input type="email" id="donorEmail" placeholder="Email nhận ảnh" required></div>
             <button onclick="downloadAll()">📦 Tải Toàn Bộ Ảnh</button>
+            <button onclick="downloadStrip()">📸 Tải Photobooth</button>
             <button onclick="sendSelected()">📧 Gửi Thông Báo</button>
         </div>
-        
+
         <div id="status"></div>
     </div>
 
     <script>
-        // Khởi tạo
         let originalImage = null;
         let originalDataURL = null;
-        let filterImages = {};  // { 'Sepia': dataURL, ... }
+        let filterImages = {};
         let selectedFilter = null;
-        let currentSet = 0;  // Bộ hiện tại (0-4 cho 50 filter, mỗi bộ 10)
-        let allFilters = [];  // Mảng 50 filter
+        let selectedFrame = null;
+        let stripDataURL = null;
+        let currentSet = 0;
+        let allFilters = [];  // Sẽ được sắp xếp xen kẽ
+
         const status = document.getElementById('status');
         const filtersGrid = document.getElementById('filtersGrid');
+        const framesGrid = document.getElementById('framesGrid');
         const progress = document.getElementById('progress');
         const generateBtn = document.getElementById('generateBtn');
         const resetBtn = document.getElementById('resetBtn');
         const nextSetBtn = document.getElementById('nextSetBtn');
+        const generateStripBtn = document.getElementById('generateStripBtn');
+        const stripPreview = document.getElementById('stripPreview');
         const setInfo = document.getElementById('setInfo');
         const currentSetSpan = document.getElementById('currentSet');
-        
 
-        // EmailJS - THAY BẰNG KEY CỦA BẠN
-        emailjs.init('WMR-hVI4x19gyn3uT');  // User ID từ EmailJS
+        emailjs.init('WMR-hVI4x19gyn3uT');
 
-        // 50 filter màu đẹp mới (tránh artifact, tập trung màu dịu dàng, đẹp hơn)
         function initFilters() {
-           allFilters = [
+            // Danh sách gốc
+            const cinematic = [
+               { name: 'Clean Natural', filter: 'contrast(108%) brightness(105%) saturate(110%)' },
+                { name: 'Cine Deep Indigo', filter: 'contrast(120%) brightness(95%) saturate(115%) hue-rotate(210deg)' },
+                { name: 'Cine Dark Fade', filter: 'contrast(140%) brightness(88%) saturate(90%) sepia(10%)' },
+                { name: 'Cine Olive Shadows', filter: 'contrast(115%) brightness(94%) hue-rotate(150deg) saturate(130%)' },
+                { name: 'Cine Silver Blue', filter: 'contrast(122%) brightness(101%) saturate(118%) hue-rotate(190deg)' },
+                { name: 'Cine Gold Warm', filter: 'contrast(112%) saturate(120%) brightness(107%) sepia(20%)' },
+                { name: 'Cine Urban Matte', filter: 'contrast(104%) brightness(93%) saturate(80%) grayscale(15%)' },
+                { name: 'Cine Vintage Bronze', filter: 'contrast(115%) brightness(96%) sepia(35%) saturate(120%)' },
+                { name: 'Cine Cold Night', filter: 'contrast(135%) brightness(90%) hue-rotate(240deg)' },
+                { name: 'Cine Highlight Glow', filter: 'contrast(112%) brightness(115%) saturate(130%)' }
+            ];
+            const pastel = [
+                { name: 'Clean Sharp Daylight', filter: 'contrast(118%) brightness(106%) saturate(115%)' },
+                { name: 'Pastel Aqua Wash', filter: 'brightness(120%) saturate(118%) hue-rotate(185deg)' },
+                { name: 'Pastel Cloud Pink', filter: 'brightness(117%) saturate(130%) hue-rotate(350deg)' },
+                { name: 'Pastel Cream Rose', filter: 'brightness(112%) saturate(110%) sepia(8%) hue-rotate(5deg)' },
+                { name: 'Pastel Lemon Fade', filter: 'brightness(125%) saturate(140%) hue-rotate(70deg)' },
+                { name: 'Pastel Mint Breeze', filter: 'brightness(118%) saturate(122%) hue-rotate(155deg)' },
+                { name: 'Pastel Sky Glow', filter: 'brightness(120%) saturate(115%) hue-rotate(200deg)' },
+                { name: 'Pastel Soft Violet', filter: 'brightness(115%) saturate(110%) hue-rotate(260deg)' },
+                { name: 'Pastel Smooth Blue', filter: 'brightness(123%) saturate(112%) hue-rotate(210deg)' },
+                { name: 'Pastel Candy Glow', filter: 'brightness(118%) saturate(140%) hue-rotate(350deg)' }
+            ];
+            const golden = [
+                { name: 'Clean Neutral', filter: 'contrast(105%) brightness(102%) saturate(105%)' },
+                { name: 'Golden Hour Ultra', filter: 'sepia(45%) saturate(135%) brightness(113%) hue-rotate(12deg)' },
+                { name: 'Amber Honey', filter: 'sepia(30%) saturate(130%) brightness(110%) hue-rotate(30deg)' },
+                { name: 'Champagne Glow', filter: 'sepia(18%) saturate(115%) brightness(109%)' },
+                { name: 'Royal Gold Max', filter: 'sepia(55%) saturate(145%) brightness(102%)' },
+                { name: 'Warm Cream Soft', filter: 'sepia(15%) brightness(116%) saturate(110%)' },
+                { name: 'Golden Film Pro', filter: 'sepia(40%) contrast(112%) brightness(103%)' },
+                { name: 'Soft Sunset Gold', filter: 'saturate(115%) brightness(110%) hue-rotate(22deg)' },
+                { name: 'Amber Vintage', filter: 'sepia(35%) saturate(130%) brightness(96%) contrast(112%)' },
+                { name: 'Ivory Gold', filter: 'sepia(25%) saturate(105%) brightness(115%)' }
+            ];
+            const moody = [
+                { name: 'Film Fuji Soft', filter: 'brightness(110%) saturate(105%) contrast(103%)' },
+                { name: 'Moody Dark Forest', filter: 'contrast(130%) brightness(88%) hue-rotate(150deg) saturate(75%)' },
+                { name: 'Moody Ink Navy', filter: 'contrast(122%) brightness(90%) hue-rotate(220deg)' },
+                { name: 'Moody Soft Shadow', filter: 'brightness(92%) contrast(110%) grayscale(20%)' },
+                { name: 'Moody Warm Fade', filter: 'contrast(115%) brightness(95%) sepia(20%) saturate(90%)' },
+                { name: 'Moody Fog Gray', filter: 'brightness(105%) saturate(80%) grayscale(15%)' },
+                { name: 'Moody Deep Violet', filter: 'contrast(130%) brightness(88%) hue-rotate(280deg)' },
+                { name: 'Moody Charcoal', filter: 'contrast(140%) brightness(83%) saturate(70%) grayscale(18%)' },
+                { name: 'Moody Bronze', filter: 'contrast(122%) brightness(94%) sepia(30%)' },
+                { name: 'Moody Night Fade', filter: 'contrast(120%) brightness(90%) hue-rotate(250deg)' }
+            ];
+            const vibrant = [
+                { name: 'Clean Clarity', filter: 'contrast(115%) brightness(104%) saturate(112%)' },
+                { name: 'Clean Soft White', filter: 'brightness(112%) contrast(102%)' },
+                { name: 'Cine Teal Orange Pro', filter: 'contrast(128%) brightness(103%) saturate(135%) hue-rotate(18deg)' },
+                { name: 'Film Tokina', filter: 'contrast(113%) brightness(104%) saturate(120%)' },
+                { name: 'Vivid Magenta', filter: 'saturate(175%) contrast(122%) brightness(102%) hue-rotate(295deg)' },
+                { name: 'Vivid Cyber Lime', filter: 'saturate(180%) contrast(120%) brightness(108%) hue-rotate(90deg)' },
+                { name: 'Vivid Purple Pop', filter: 'saturate(165%) contrast(118%) brightness(104%) hue-rotate(260deg)' },
+                { name: 'Vivid Sunrise', filter: 'saturate(150%) contrast(117%) brightness(110%) hue-rotate(25deg)' },
+                { name: 'Vivid Tropical', filter: 'saturate(170%) contrast(118%) brightness(107%) hue-rotate(145deg)' },
+                { name: 'Vivid Rainbow', filter: 'saturate(185%) contrast(125%) brightness(103%)' }
+            ];
 
-    // 🎬 BỘ 1: CINEMATIC PREMIUM
-    { name: 'Cine Teal Orange Pro', filter: 'contrast(128%) brightness(103%) saturate(140%) hue-rotate(18deg)' },
-    { name: 'Cine Deep Indigo', filter: 'contrast(120%) brightness(95%) saturate(115%) hue-rotate(210deg)' },
-    { name: 'Cine Dark Fade', filter: 'contrast(140%) brightness(88%) saturate(90%) sepia(10%)' },
-    { name: 'Cine Olive Shadows', filter: 'contrast(115%) brightness(94%) hue-rotate(150deg) saturate(130%)' },
-    { name: 'Cine Silver Blue', filter: 'contrast(122%) brightness(101%) saturate(118%) hue-rotate(190deg)' },
-    { name: 'Cine Gold Warm', filter: 'contrast(112%) saturate(120%) brightness(107%) sepia(20%)' },
-    { name: 'Cine Urban Matte', filter: 'contrast(104%) brightness(93%) saturate(80%) grayscale(15%)' },
-    { name: 'Cine Vintage Bronze', filter: 'contrast(115%) brightness(96%) sepia(35%) saturate(120%)' },
-    { name: 'Cine Cold Night', filter: 'contrast(135%) brightness(90%) hue-rotate(240deg)' },
-    { name: 'Cine Highlight Glow', filter: 'contrast(112%) brightness(115%) saturate(130%)' },
+            const standardGroups = [cinematic, pastel, golden, moody];
+            const vibrantGroup = vibrant;
 
-    // 🌸 BỘ 2: PASTEL DREAM
-    { name: 'Pastel Peach Dream', filter: 'brightness(115%) saturate(135%) hue-rotate(12deg)' },
-    { name: 'Pastel Aqua Wash', filter: 'brightness(120%) saturate(118%) hue-rotate(185deg)' },
-    { name: 'Pastel Cloud Pink', filter: 'brightness(117%) saturate(130%) hue-rotate(350deg)' },
-    { name: 'Pastel Cream Rose', filter: 'brightness(112%) saturate(110%) sepia(8%) hue-rotate(5deg)' },
-    { name: 'Pastel Lemon Fade', filter: 'brightness(125%) saturate(140%) hue-rotate(70deg)' },
-    { name: 'Pastel Mint Breeze', filter: 'brightness(118%) saturate(122%) hue-rotate(155deg)' },
-    { name: 'Pastel Sky Glow', filter: 'brightness(120%) saturate(115%) hue-rotate(200deg)' },
-    { name: 'Pastel Soft Violet', filter: 'brightness(115%) saturate(110%) hue-rotate(260deg)' },
-    { name: 'Pastel Smooth Blue', filter: 'brightness(123%) saturate(112%) hue-rotate(210deg)' },
-    { name: 'Pastel Candy Glow', filter: 'brightness(118%) saturate(140%) hue-rotate(350deg)' },
-
-    // 🌈 BỘ 3: VIBRANT POP (RỰC RỠ – BẮT MẮT)
-    { name: 'Vivid Scarlet', filter: 'saturate(160%) contrast(125%) brightness(104%) hue-rotate(355deg)' },
-    { name: 'Vivid Ocean', filter: 'saturate(155%) contrast(120%) brightness(103%) hue-rotate(200deg)' },
-    { name: 'Vivid Sunburst', filter: 'saturate(150%) contrast(115%) brightness(109%) hue-rotate(45deg)' },
-    { name: 'Vivid Emerald', filter: 'saturate(165%) contrast(118%) brightness(105%) hue-rotate(120deg)' },
-    { name: 'Vivid Magenta', filter: 'saturate(175%) contrast(122%) brightness(102%) hue-rotate(295deg)' },
-    { name: 'Vivid Cyber Lime', filter: 'saturate(180%) contrast(120%) brightness(108%) hue-rotate(90deg)' },
-    { name: 'Vivid Purple Pop', filter: 'saturate(165%) contrast(118%) brightness(104%) hue-rotate(260deg)' },
-    { name: 'Vivid Sunrise', filter: 'saturate(150%) contrast(117%) brightness(110%) hue-rotate(25deg)' },
-    { name: 'Vivid Tropical', filter: 'saturate(170%) contrast(118%) brightness(107%) hue-rotate(145deg)' },
-    { name: 'Vivid Rainbow', filter: 'saturate(185%) contrast(125%) brightness(103%)' },
-
-    // 🌧️ BỘ 4: MOODY ART (SÂU – NGHỆ – TỐI)
-    { name: 'Moody Matte Black', filter: 'contrast(85%) brightness(85%) saturate(50%) grayscale(25%)' },
-    { name: 'Moody Dark Forest', filter: 'contrast(130%) brightness(88%) hue-rotate(150deg) saturate(75%)' },
-    { name: 'Moody Ink Navy', filter: 'contrast(122%) brightness(90%) hue-rotate(220deg)' },
-    { name: 'Moody Soft Shadow', filter: 'brightness(92%) contrast(110%) grayscale(20%)' },
-    { name: 'Moody Warm Fade', filter: 'contrast(115%) brightness(95%) sepia(20%) saturate(90%)' },
-    { name: 'Moody Fog Gray', filter: 'brightness(105%) saturate(80%) grayscale(15%)' },
-    { name: 'Moody Deep Violet', filter: 'contrast(130%) brightness(88%) hue-rotate(280deg)' },
-    { name: 'Moody Charcoal', filter: 'contrast(140%) brightness(83%) saturate(70%) grayscale(18%)' },
-    { name: 'Moody Bronze', filter: 'contrast(122%) brightness(94%) sepia(30%)' },
-    { name: 'Moody Night Fade', filter: 'contrast(120%) brightness(90%) hue-rotate(250deg)' },
-
-    // ☀️ BỘ 5: GOLDEN GLOW (ÁNH VÀNG SANG TRỌNG)
-    { name: 'Gold Shine Premium', filter: 'sepia(35%) saturate(145%) brightness(107%) hue-rotate(18deg)' },
-    { name: 'Golden Hour Ultra', filter: 'sepia(45%) saturate(135%) brightness(113%) hue-rotate(12deg)' },
-    { name: 'Amber Honey', filter: 'sepia(30%) saturate(130%) brightness(110%) hue-rotate(30deg)' },
-    { name: 'Champagne Glow', filter: 'sepia(18%) saturate(115%) brightness(109%)' },
-    { name: 'Royal Gold Max', filter: 'sepia(55%) saturate(145%) brightness(102%)' },
-    { name: 'Warm Cream Soft', filter: 'sepia(15%) brightness(116%) saturate(110%)' },
-    { name: 'Golden Film Pro', filter: 'sepia(40%) contrast(112%) brightness(103%)' },
-    { name: 'Soft Sunset Gold', filter: 'saturate(115%) brightness(110%) hue-rotate(22deg)' },
-    { name: 'Amber Vintage', filter: 'sepia(35%) saturate(130%) brightness(96%) contrast(112%)' },
-    { name: 'Ivory Gold', filter: 'sepia(25%) saturate(105%) brightness(115%)' },
-];
-
+            // Sắp xếp xen kẽ toàn bộ 50 filter
+            allFilters = [];
+            let vIndex = 0;
+            for (let i = 0; i < 50; i++) {
+                if (i % 2 === 0) {
+                    // Chuẩn đẹp (luân phiên 4 nhóm)
+                    const groupIndex = Math.floor(i / 2) % standardGroups.length;
+                    const group = standardGroups[groupIndex];
+                    const itemIndex = Math.floor((i / 2) / standardGroups.length) % group.length;
+                    allFilters.push(group[itemIndex]);
+                } else {
+                    // Sặc sỡ (vibrant)
+                    allFilters.push(vibrantGroup[vIndex % vibrantGroup.length]);
+                    vIndex++;
+                }
+            }
         }
 
-        // Hiển thị status
+        const allFrames = [
+            { name: 'Anh em ta cứ thế thôi hẹ hẹ hẹ', url: 'https://cdn.freehihi.com/6929d01fd3d8c.png' },
+            { name: '… khổ nhất thế giới', url: 'https://cdn.freehihi.com/6873abf8e3917.png' },
+            { name: 'Đoán vội…', url: 'https://cdn.freehihi.com/68e8e901bae50.png' },
+            { name: 'Im lặng đi gopi', url: 'https://cdn.freehihi.com/68b0244e76e35.png' },
+            { name: 'Trí thông minh giản zị', url: 'https://cdn.freehihi.com/68529c7e26d92.png' },
+
+            { name: 'Thân chưa mà giỡn kiểu đó', url: 'https://cdn.freehihi.com/68df420421b73.png' },
+            { name: 'Cặp lông mày skinship', url: 'https://cdn.freehihi.com/68529cd40bc49.png' },
+            { name: 'Nghe bài Trình chưa?', url: 'https://cdn.freehihi.com/692ed2cc19d03.png' },
+            { name: 'Ở ngay trung tâm quận 1', url: 'https://cdn.freehihi.com/68d8f10969679.png' },
+            { name: 'Anh/chị mà vô chùa là không biết lạy ai luôn đó', url: 'https://cdn.freehihi.com/692c32375296f.png' },
+
+            { name: 'Ối giời ôi, ối dồi ôi', url: 'https://cdn.freehihi.com/692c31d942db2.png' },
+            { name: 'Thiếu cái áo cà sa là thành Phật', url: 'https://cdn.freehihi.com/68b0907158035.png' },
+            { name: 'Hơn cả khu tự trị', url: 'https://cdn.freehihi.com/69029e105f6fb.png' },
+            { name: 'Kiếp nạn thứ 82', url: 'https://cdn.freehihi.com/6857dd9fcbe9d.png' },
+            { name: 'Flex', url: 'https://cdn.freehihi.com/68dd4f8543881.png' },
+
+            { name: 'Slay', url: 'https://cdn.freehihi.com/690b83c2b46f0.png' },
+            { name: 'Red flag', url: 'https://cdn.freehihi.com/690242dc53308.png' },
+            { name: 'Pressing', url: 'https://cdn.freehihi.com/68d0dd9bb3a08.png' },
+            { name: 'Giờ tao đưa mày 4 tỷ, tao kêu mày biến, mày biến không?', url: 'https://cdn.freehihi.com/690980ff180f2.png' },
+            { name: 'Em dành thời gian cho em đi em!', url: 'https://cdn.freehihi.com/68d50f3783378.png' },
+
+            { name: 'Tại sao anh Pakistan lại gọi cho Ny bằng số điện thoại?', url: 'https://cdn.freehihi.com/692d8418563a1.png' },
+            { name: 'Đã làm gì đâu? Đã chạm vào đâu?', url: 'https://cdn.freehihi.com/6873886b68477.png' },
+            { name: 'Mình xin phép ăn miếng to nhé', url: 'https://cdn.freehihi.com/6921c4677562b.png' },
+            { name: 'Đại đại đi', url: 'https://cdn.freehihi.com/68529b5bf0b08.png' },
+            { name: 'Cũng cũng', url: 'https://cdn.freehihi.com/690ccb0bcd53e.png' },
+
+            { name: 'Chưa có đủ wow', url: 'https://cdn.freehihi.com/68dbb8968a7c0.png' },
+            { name: 'Ê nha', url: 'https://cdn.freehihi.com/6910b900890cc.png' },
+            { name: 'Đọc stk đây', url: 'https://cdn.freehihi.com/6873ac02ab5a1.png' },
+            { name: 'Cơm nước gì chưa người đẹp', url: 'https://cdn.freehihi.com/68707f70636a1.png' },
+            { name: 'Bóc trúng sít rịt', url: 'https://cdn.freehihi.com/68e4dff09e6d5.png' },
+
+            { name: 'Bà nói thiệt hả bà Thơ', url: 'https://cdn.freehihi.com/6852977303afd.png' },
+            { name: 'Thuyệt hôm bà', url: 'https://cdn.freehihi.com/68e73af797a67.png' },
+            { name: '+1 máy…', url: 'https://cdn.freehihi.com/68ab39da93cd1.png' },
+            { name: 'Hướng nội hết phần đời còn lại', url: 'https://cdn.freehihi.com/68dc652f832fc.png' },
+            { name: 'Giỡn vậy có nên không trời', url: 'https://cdn.freehihi.com/6852d138ea7bf.png' },
+
+
+            
+
+        ];
+
         function showStatus(msg, isError = false) {
             status.textContent = msg;
             status.className = isError ? 'error' : 'success';
             status.style.display = 'block';
-            const timeout = isError ? 5000 : 3000;
-            setTimeout(() => { 
-                if (!isError) status.style.display = 'none'; 
-            }, timeout);
+            setTimeout(() => { if (!isError) status.style.display = 'none'; }, isError ? 5000 : 3000);
         }
 
-        // Hiển thị progress
         function showProgress(show = true) {
             progress.style.display = show ? 'block' : 'none';
             generateBtn.disabled = show;
         }
 
-        // Reset app
         function resetApp() {
             originalImage = null;
             originalDataURL = null;
             filterImages = {};
             selectedFilter = null;
+            selectedFrame = null;
+            stripDataURL = null;
             currentSet = 0;
             filtersGrid.innerHTML = '';
+            framesGrid.innerHTML = '';
             filtersGrid.style.display = 'none';
+            framesGrid.style.display = 'none';
             setInfo.style.display = 'none';
             nextSetBtn.style.display = 'none';
+            generateStripBtn.style.display = 'none';
+            stripPreview.style.display = 'none';
             document.getElementById('formSection').style.display = 'none';
             document.getElementById('preview').style.display = 'none';
             generateBtn.disabled = true;
@@ -402,14 +346,11 @@
             document.getElementById('fileInput').value = '';
         }
 
-        // Load ảnh gốc
         function loadImage(event) {
             const file = event.target.files[0];
             if (!file) return;
-            if (file.size > 5 * 1024 * 1024) {
-                showStatus('Ảnh quá lớn! Giới hạn 5MB.', true);
-                return;
-            }
+            if (file.size > 10 * 1024 * 1024) return showStatus('Ảnh quá lớn! Giới hạn 10MB.', true);
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 originalDataURL = e.target.result;
@@ -418,90 +359,73 @@
                     document.getElementById('preview').src = originalDataURL;
                     document.getElementById('preview').style.display = 'block';
                     generateBtn.disabled = false;
-                    showStatus('Ảnh gốc sẵn sàng! Nhấn tạo filter.');
-                    initFilters();  // Khởi tạo filters nếu chưa
+                    showStatus('Ảnh gốc sẵn sàng! Nhấn tạo 4 filter.');
+                    initFilters();
                 };
                 originalImage.src = originalDataURL;
             };
             reader.readAsDataURL(file);
         }
 
-        // Function để apply filter và nâng chất lượng + dải trắng mờ dưới + chữ (giữ kích thước gốc, nét cao)
         function applyFilter(ctx, canvas, filterStr) {
-            // Sử dụng kích thước gốc chính xác
             canvas.width = originalImage.width;
-            canvas.height = originalImage.height + 60;  // +60 cho dải trắng, height gốc cho ảnh
+            canvas.height = originalImage.height + 60;
 
-            // Apply CSS filter cho màu đẹp
             ctx.filter = filterStr;
-            ctx.drawImage(originalImage, 0, 0, originalImage.width, originalImage.height);  // Vẽ đúng kích thước gốc
-            ctx.filter = 'none';  // Reset
+            ctx.drawImage(originalImage, 0, 0, originalImage.width, originalImage.height);
+            ctx.filter = 'none';
 
-            // Bỏ sharpen để tránh artifact, chỉ vignette nhẹ
-            // Thêm vignette nhẹ để nâng chất lượng (không làm tối quá)
-            const gradient = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2 - 30, canvas.width / 3, canvas.width / 2, canvas.height / 2 - 30, canvas.width / 1.2);
+            const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2 - 30, canvas.width/3, canvas.width/2, canvas.height/2 - 30, canvas.width/1.2);
             gradient.addColorStop(0, 'rgba(255,255,255,0)');
-            gradient.addColorStop(1, 'rgba(0,0,0,0.15)');  // Vignette nhẹ hơn
+            gradient.addColorStop(1, 'rgba(0,0,0,0.15)');
             ctx.fillStyle = gradient;
             ctx.globalCompositeOperation = 'multiply';
-            ctx.fillRect(0, 0, canvas.width, canvas.height - 60);  // Chỉ áp vignette cho phần ảnh, không dải
+            ctx.fillRect(0, 0, canvas.width, canvas.height - 60);
             ctx.globalCompositeOperation = 'source-over';
 
-            // Thêm dải trắng mờ nhẹ ở dưới (chiều cao 60px, semi-transparent)
             const stripHeight = 60;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';  // Trắng mờ nhẹ hơn
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
             ctx.fillRect(0, canvas.height - stripHeight, canvas.width, stripHeight);
 
-            // Thêm chữ mờ (font đẹp, center, shadow để mờ)
-            // Style chữ + đổ bóng
-            ctx.font = 'bold 19px "Playfair Display", serif';
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.9)'; // Chữ đen đậm, dễ đọc
+            ctx.font = 'bold 30px "Playfair Display", serif';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
 
-            // Đổ bóng chuyên nghiệp
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';   // Bóng đen nhẹ
-            ctx.shadowBlur = 4;                        // Độ mờ
-            ctx.shadowOffsetX = 2;                     // Lệch ngang
-            ctx.shadowOffsetY = 2;                     // Lệch dọc
-
-            const text =
-                'KHOA CNTT - DNU KÍNH TẶNG! CẢM ƠN BẠN ĐÃ ĐỒNG HÀNH CÙNG CHƯƠNG TRÌNH GÂY QUỸ THIỆN NGUYỆN VÙNG CAO 2025';
-
+            const text = 'KHOA CNTT - DNU KÍNH TẶNG! CẢM ƠN BẠN ĐÃ ĐỒNG HÀNH CÙNG CHƯƠNG TRÌNH GÂY QUỸ THIỆN NGUYỆN VÙNG CAO 2025';
             ctx.fillText(text, canvas.width / 2, canvas.height - stripHeight / 2);
 
-            // Reset shadow sau khi vẽ
             ctx.shadowBlur = 0;
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
-
         }
 
-        // Generate 10 filter từ bộ hiện tại
         function generateFilters() {
-             generateBtn.classList.add("loading-btn"); // 🔥 Bật hiệu ứng loading
+            generateBtn.classList.add("loading-btn");
             progress.style.display = "block";
 
             setTimeout(() => {
-            if (!originalImage || !originalDataURL || allFilters.length === 0) return;
-            showProgress(true);
-            filtersGrid.innerHTML = '';
-            filterImages = {};
-            let processed = 0;
+                if (!originalImage) return;
+                showProgress(true);
+                filtersGrid.innerHTML = '';
+                filterImages = {};
 
-            const currentFilters = allFilters.slice(currentSet * 10, (currentSet + 1) * 10);
+                const start = currentSet * 4;
+                const end = Math.min(start + 4, allFilters.length);
+                const currentFilters = allFilters.slice(start, end);
 
-            
+                currentFilters.forEach((filter) => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
 
-            currentFilters.forEach((filter) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                try {
                     applyFilter(ctx, canvas, filter.filter);
-                    const dataURL = canvas.toDataURL('image/jpeg', 0.95);  // Chất lượng cao hơn 0.95 để nét
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.98);
+
                     filterImages[filter.name] = dataURL;
-                    console.log(`Thành công ${filter.name}: Kích thước gốc, nét cao!`);  // Log
 
                     const item = document.createElement('div');
                     item.className = 'filter-item';
@@ -511,80 +435,135 @@
                         <button onclick="downloadFilter('${filter.name}')">💾 Tải</button>
                     `;
                     filtersGrid.appendChild(item);
-                    processed++;
-                    if (processed === 10) {
-                        filtersGrid.style.display = 'grid';
-                        document.getElementById('formSection').style.display = 'block';
-                        resetBtn.style.display = 'inline-block';
-                        setInfo.style.display = 'block';
-                        currentSetSpan.textContent = currentSet + 1;
-                        if (currentSet < 4) nextSetBtn.style.display = 'inline-block';
-                        showProgress(false);
-                        showStatus('Tạo xong bộ ' + (currentSet + 1) + '! Kích thước gốc, nét cao. 🎉');
-                        document.querySelectorAll('.filter-item').forEach(el => el.classList.add('reveal'));
-                        setupReveal();
-                    }
-                } catch (error) {
-                    console.error('Lỗi filter ' + filter.name + ':', error);
-                    // Fallback với kích thước gốc
-                    const fallbackCanvas = document.createElement('canvas');
-                    const fallbackCtx = fallbackCanvas.getContext('2d');
-                    fallbackCanvas.width = originalImage.width;
-                    fallbackCanvas.height = originalImage.height + 60;
-                    fallbackCtx.drawImage(originalImage, 0, 0);
-                    // Áp dải trắng + chữ cho fallback
-                    const stripHeight = 60;
-                    fallbackCtx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-                    fallbackCtx.fillRect(0, fallbackCanvas.height - stripHeight, fallbackCanvas.width, stripHeight);
-                    fallbackCtx.font = 'bold 14px "Playfair Display", serif';
-                    fallbackCtx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-                    fallbackCtx.textAlign = 'center';
-                    fallbackCtx.textBaseline = 'middle';
-                    fallbackCtx.shadowColor = 'rgba(255, 255, 255, 0.6)';
-                    fallbackCtx.shadowBlur = 3;
-                    const text = 'DNU - KHOA CÔNG NGHỆ THÔNG TIN KÍNH TẶNG';
-                    fallbackCtx.fillText(text, fallbackCanvas.width / 2, fallbackCanvas.height - stripHeight / 2);
-                    fallbackCtx.shadowBlur = 0;
-                    filterImages[filter.name] = fallbackCanvas.toDataURL('image/jpeg', 0.95);
-                    const item = document.createElement('div');
-                    item.className = 'filter-item';
-                    item.innerHTML = `
-                        <img src="${filterImages[filter.name]}" class="filter-img" alt="${filter.name}" onclick="selectFilter('${filter.name}')">
-                        <div class="filter-name">${filter.name} (Gốc - Lỗi)</div>
-                        <button onclick="downloadFilter('${filter.name}')">💾 Tải</button>
-                    `;
-                    filtersGrid.appendChild(item);
-                    processed++;
-                    if (processed === 10) {
-                        filtersGrid.style.display = 'grid';
-                        document.getElementById('formSection').style.display = 'block';
-                        resetBtn.style.display = 'inline-block';
-                        setInfo.style.display = 'block';
-                        currentSetSpan.textContent = currentSet + 1;
-                        if (currentSet < 4) nextSetBtn.style.display = 'inline-block';
-                        showProgress(false);
-                        showStatus('Tạo xong bộ ' + (currentSet + 1) + ' (có fallback).', true);
-                        document.querySelectorAll('.filter-item').forEach(el => el.classList.add('reveal'));
-                        setupReveal();
-                    }
-                }
-            });
-            
-                generateBtn.classList.remove("loading-btn"); // 🔥 Tắt loading
+                });
+
+                filtersGrid.style.display = 'grid';
+                renderFramesGrid();
+                document.getElementById('formSection').style.display = 'block';
+                resetBtn.style.display = 'inline-block';
+                setInfo.style.display = 'block';
+                currentSetSpan.textContent = currentSet + 1;
+                if (end < allFilters.length) nextSetBtn.style.display = 'inline-block';
+                generateStripBtn.style.display = 'block';
+                showProgress(false);
+                showStatus(`Tạo xong bộ ${currentSet + 1} (4 filter xen kẽ chuẩn đẹp & sặc sỡ)!`);
+                document.querySelectorAll('.filter-item').forEach(el => el.classList.add('reveal'));
+                setupReveal();
+
+                generateBtn.classList.remove("loading-btn");
             }, 200);
         }
 
-        // Chuyển bộ tiếp theo
+        function renderFramesGrid() {
+            framesGrid.innerHTML = '';
+            allFrames.forEach((frame) => {
+                const item = document.createElement('div');
+                item.className = 'frame-item reveal';
+                item.innerHTML = `
+                    <img src="${frame.url}" class="frame-preview" alt="${frame.name}" onclick="selectFrame('${frame.name}')">
+                    <div class="frame-name">${frame.name}</div>
+                    <button onclick="generatePhotoboothStrip('${frame.name}')">🎨 Áp Dụng</button>
+                `;
+                framesGrid.appendChild(item);
+            });
+            framesGrid.style.display = 'grid';
+            setupReveal();
+        }
+
+        function selectFrame(frameName) {
+            selectedFrame = frameName;
+            document.querySelectorAll('.frame-item').forEach(item => item.style.border = 'none');
+            event.target.parentElement.style.border = '3px solid #f5576c';
+            showStatus(`Đã chọn khung: ${frameName}`);
+        }
+
+        function generatePhotoboothStrip(specificFrameName = null) {
+            if (Object.keys(filterImages).length < 4) {
+                return showStatus('Cần ít nhất 4 filter để tạo strip!', true);
+            }
+
+            const frameName = specificFrameName || selectedFrame;
+            if (!frameName) return showStatus('Vui lòng chọn khung photobooth!', true);
+
+            const selectedFrameObj = allFrames.find(f => f.name === frameName);
+            if (!selectedFrameObj) return showStatus('Không tìm thấy khung!', true);
+
+            showProgress(true);
+
+            const frameImg = new Image();
+            frameImg.crossOrigin = 'anonymous';
+            frameImg.src = selectedFrameObj.url;
+
+            frameImg.onload = () => {
+                const filterKeys = Object.keys(filterImages).slice(0, 4);
+                const imagesToUse = filterKeys.map(key => filterImages[key]);
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = frameImg.width;
+                canvas.height = frameImg.height;
+
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const gap = 38;
+                const totalHeight = canvas.height;
+                const availableHeight = totalHeight - gap * 3;
+                const slotHeight = availableHeight / 4;
+
+                let loadedCount = 0;
+                imagesToUse.forEach((imgSrc, index) => {
+                    const photoImg = new Image();
+                    photoImg.crossOrigin = 'anonymous';
+                    photoImg.onload = () => {
+                        const slotY = index * (slotHeight + gap);
+                        const margin = 30;
+                        const slotWidth = canvas.width - margin * 2;
+
+                        const scaleX = slotWidth / photoImg.width;
+                        const scaleY = slotHeight / photoImg.height;
+                        const scale = Math.max(scaleX, scaleY);
+
+                        const drawWidth = photoImg.width * scale;
+                        const drawHeight = photoImg.height * scale;
+                        const drawX = (canvas.width - drawWidth) / 2;
+                        const drawY = slotY + (slotHeight - drawHeight) / 2;
+
+                        ctx.drawImage(photoImg, drawX, drawY, drawWidth, drawHeight);
+
+                        loadedCount++;
+                        if (loadedCount === 4) {
+                            ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+
+                            ctx.filter = 'contrast(110%) brightness(105%)';
+                            ctx.drawImage(canvas, 0, 0);
+                            ctx.filter = 'none';
+
+                            stripDataURL = canvas.toDataURL('image/png', 1.0);
+                            stripPreview.src = stripDataURL;
+                            stripPreview.style.display = 'block';
+                            showProgress(false);
+                            showStatus(`Tạo strip "${frameName}" thành công!`);
+                        }
+                    };
+                    photoImg.src = imgSrc;
+                });
+            };
+            frameImg.onerror = () => {
+                showProgress(false);
+                showStatus('Lỗi load khung template!', true);
+            };
+        }
+
         function nextFilterSet() {
-            if (currentSet < 4) {
+            if (currentSet < 12) {  // 13 bộ (0-12)
                 currentSet++;
-                generateFilters();  // Tái tạo bộ mới
+                generateFilters();
             } else {
-                showStatus('Đã hết bộ filter!', true);
+                showStatus('Đã hết tất cả 50 filter!', true);
             }
         }
 
-        // Chọn filter
         function selectFilter(filterName) {
             selectedFilter = filterName;
             document.querySelectorAll('.filter-item').forEach(item => item.style.border = 'none');
@@ -592,92 +571,88 @@
             showStatus(`Đã chọn: ${filterName}`);
         }
 
-        // Tải filter riêng
         function downloadFilter(filterName) {
             const dataURL = filterImages[filterName];
-            if (!dataURL) {
-                showStatus('Không tìm thấy ảnh!', true);
-                return;
-            }
             const link = document.createElement('a');
-            link.download = `anh-${filterName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.jpg`;
+            link.download = `anh-${filterName.replace(/[^a-zA-Z0-9]/g, '-')}.jpg`;
             link.href = dataURL;
             link.click();
-            showStatus(`Đã tải ${filterName}! (Kích thước gốc)`);
+            showStatus(`Đã tải ${filterName}!`);
         }
 
-        // Tải bộ ZIP
+        function downloadStrip() {
+            if (!stripDataURL) return showStatus('Chưa tạo strip!', true);
+            const link = document.createElement('a');
+            link.download = `photobooth-strip-${selectedFrame || 'default'}.png`;
+            link.href = stripDataURL;
+            link.click();
+            showStatus(`Đã tải Strip Photobooth!`);
+        }
+
         async function downloadAll() {
-            if (Object.keys(filterImages).length === 0) {
-                showStatus('Chưa có ảnh để tải!', true);
-                return;
-            }
+            if (Object.keys(filterImages).length === 0) return showStatus('Chưa có ảnh!', true);
             const zip = new JSZip();
             Object.keys(filterImages).forEach(name => {
                 const base64 = filterImages[name].split(',')[1];
                 zip.file(`${name.replace(/[^a-zA-Z0-9]/g, '-')}.jpg`, base64, { base64: true });
             });
+            if (stripDataURL) {
+                const stripBase64 = stripDataURL.split(',')[1];
+                zip.file(`photobooth-strip-${selectedFrame || 'default'}.png`, stripBase64, { base64: true });
+            }
+            const content = await zip.generateAsync({ type: 'blob' });
+            const link = document.createElement('a');
+            link.download = `bo-${currentSet + 1}-4-anh-gay-quy-strip.zip`;
+            link.href = URL.createObjectURL(content);
+            link.click();
+            showStatus('Đã tải ZIP bộ hiện tại + Strip!');
+        }
+
+        async function sendSelected() {
+            const name = document.getElementById('donorName').value.trim();
+            const email = document.getElementById('donorEmail').value.trim();
+            if (!name || !email) return showStatus('Vui lòng nhập đầy đủ!', true);
+
+            showProgress(true);
+            const message = `Cảm ơn ${name} đã ủng hộ! ${selectedFilter ? `Filter: "${selectedFilter}"` : ''} ${selectedFrame ? `Khung: "${selectedFrame}"` : ''}. Vui lòng IB Zalo 0345335303 để nhận ảnh. Studio Gây Quỹ - DAI NAM UNI.`;
             try {
-                const content = await zip.generateAsync({ type: 'blob' });
-                const link = document.createElement('a');
-                link.download = `bo-10-anh-bo-${currentSet + 1}-gay-quy.zip`;
-                link.href = URL.createObjectURL(content);
-                link.click();
-                showStatus('Đã tải ZIP bộ hiện tại! 📦');
+                await emailjs.send('service_h9b0zrm', 'template_ecf93dw', {
+                    to_email: email,
+                    donor_name: name,
+                    message: message
+                });
+                showStatus(`Gửi thông báo thành công cho ${name}!`);
+                document.getElementById('donorName').value = '';
+                document.getElementById('donorEmail').value = '';
             } catch (error) {
-                showStatus('Lỗi tạo ZIP: ' + error.message, true);
-                console.error(error);
+                showStatus('Lỗi gửi email: ' + error.text, true);
+            } finally {
+                showProgress(false);
             }
         }
 
-        // Gửi email filter chọn
-        // Cập nhật hàm sendSelected (thay thế hàm cũ) - Chỉ gửi thông báo, không ảnh
-async function sendSelected() {
-    const name = document.getElementById('donorName').value.trim();
-    const email = document.getElementById('donorEmail').value.trim();
-    if (!name || !email) {
-        showStatus('Vui lòng nhập đầy đủ thông tin!', true);
-        return;
-    }
-    if (!selectedFilter) {
-        showStatus('Vui lòng chọn một ảnh từ grid để ghi nhận!', true);
-        return;
-    }
-
-    showProgress(true);  // Hiển thị loading
-    try {
-        // Chỉ gửi thông báo, không attachment
-        const templateParams = {
-            to_email: email,
-            donor_name: name,
-            message: `Cảm ơn ${name} đã ủng hộ chương trình gây quỹ! Bạn đã chọn filter "${selectedFilter}" từ bộ màu đẹp. Vui lòng IB Zalo: 0345335303 để nhận ảnh (nút 📦 Tải Bộ ZIP hoặc 💾 Tải riêng). Chúng tôi sẽ gửi thêm cập nhật nếu cần. 😊 Kính chào, Studio Gây Quỹ - DAI NAM UNI.`
-            // Bỏ 'attachment' để tránh lỗi size
-        };
-
-        await emailjs.send('service_h9b0zrm', 'template_ecf93dw', templateParams);
-        showStatus(`Gửi thông báo thành công cho ${name}! (Không đính kèm ảnh) 🎊`);
-        document.getElementById('donorName').value = '';
-        document.getElementById('donorEmail').value = '';
-        selectedFilter = null;
-    } catch (error) {
-        showStatus('Lỗi gửi email: ' + (error.text || error.message), true);
-        console.error(error);
-    } finally {
-        showProgress(false);
-    }
-}
         function setupReveal() {
-            const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) e.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
+
         document.addEventListener('DOMContentLoaded', () => {
             const uploadArea = document.querySelector('.upload-area');
             const fileInput = document.getElementById('fileInput');
-            if (uploadArea) {
-                uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragging'); });
-                uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('dragging'); });
-                uploadArea.addEventListener('drop', (e) => { e.preventDefault(); uploadArea.classList.remove('dragging'); const files = e.dataTransfer.files; if (files && files[0]) { fileInput.files = files; fileInput.dispatchEvent(new Event('change')); } });
-            }
+            uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragging'); });
+            uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragging'));
+            uploadArea.addEventListener('drop', e => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragging');
+                if (e.dataTransfer.files[0]) {
+                    fileInput.files = e.dataTransfer.files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
             setupReveal();
         });
     </script>
