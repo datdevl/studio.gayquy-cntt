@@ -115,7 +115,9 @@
             <img src="lg.jpg" alt="Logo" class="logo">
             <h1>Photobooth Gây Quỹ | DAI NAM UNI</h1>
         </div>
-        <h6 style="text-align:right">Version 2.0</h6>
+        <a href="ver3.html">
+            <h6 style="text-align:right">Version 3.0</h6>
+        </a>
         <p class="intro">Upload ảnh, tạo ngay ảnh photobooth đẹp lung linh <3 đừng quên ủng hộ chúng mình ở góc phải màn hình✨</p>
 
         <div class="upload-area" onclick="document.getElementById('fileInput').click()">
@@ -656,5 +658,203 @@
             setupReveal();
         });
     </script>
+    <!-- Photobooth Menu (Embedded Version) -->
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+    }
+    .bubble {
+        position: absolute;
+        bottom: -100px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        animation: rise 12s infinite ease-in;
+        filter: blur(0.5px);
+        pointer-events: none;
+        z-index: 1;
+    }
+    @keyframes rise {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-120vh) scale(1.8); opacity: 0; }
+    }
+
+    #openMenu {
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        background: #ffffffee;
+        backdrop-filter: blur(10px);
+        padding: 14px 22px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 9999;
+        transition: 0.3s;
+        color: #111; /* chữ đậm hơn */
+    }
+    #openMenu:hover { transform: scale(1.06); }
+
+    #menuModal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0,0,0,0.25);
+        backdrop-filter: blur(5px);
+        z-index: 10000;
+    }
+
+    .menu-box {
+        width: 90%;
+        max-width: 450px;
+        background: #ffffffdd;
+        backdrop-filter: blur(25px);
+        padding: 25px;
+        border-radius: 25px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+        animation: popUp 0.35s ease;
+        text-align: center;
+        z-index: 10001;
+    }
+    @keyframes popUp {
+        0% { transform: scale(0.85); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .menu-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #1e2f4f; /* đậm hơn cho dễ nhìn */
+        letter-spacing: 0.5px;
+    }
+
+    .price-card {
+        background: #ffffff;
+        padding: 12px 15px;
+        border-radius: 15px;
+        margin-top: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        font-size: 17px;
+        font-weight: 500;
+        color: #222; /* tăng độ đậm chữ */
+    }
+
+    #closeMenu {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #2a4c7f;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.25s;
+        font-weight: 600;
+    }
+    #closeMenu:hover { transform: scale(1.05); }
+</style>
+
+<script>
+for (let i = 0; i < 22; i++) {
+    let b = document.createElement("div");
+    let size = Math.random()*60 + 20;
+    b.classList.add("bubble");
+    b.style.width = size + "px";
+    b.style.height = size + "px";
+    b.style.left = Math.random()*100 + "vw";
+    b.style.animationDelay = Math.random()*5 + "s";
+    document.body.appendChild(b);
+}
+</script>
+<div id="openMenu">📸 Menu Photobooth</div>
+
+<div id="menuModal">
+    <div class="menu-box">
+        <div class="menu-content">
+            <div class="menu-left">
+                <div class="menu-title">Bảng Giá Ảnh Thường</div>
+                <div class="price-card">1 tấm (file mềm): <b>5.000đ</b></div>
+                <div class="price-card">5 tấm (file mềm): <b>15.000đ</b></div>
+                <div class="price-card">35 tấm (bản mềm): <b>150.000đ</b></div>
+                <div class="price-card">35 tấm (bản in) [6 tấm A4]: <b>200.000đ</b></div>
+                <div class="price-card">Phụ phí in ảnh: <b>+20.000đ/tấm</b></div><br>
+
+                <div class="menu-title">Bảng Giá Photobooth</div>
+                <div class="price-card">1 tấm (file mềm): <b>10.000đ</b></div>
+                <div class="price-card">5 tấm (file mềm – khác kiểu): <b>35.000đ</b></div>
+                <div class="price-card">35 tấm (file mềm): <b>50.000đ</b></div>
+                <div class="price-card">35 tấm (file mềm + in) [từ 4 ảnh gốc]: <b>150.000đ</b></div>
+                <div class="price-card">Phụ phí in ảnh: <b>+20.000đ/tấm</b></div>
+
+                <button id="closeMenu">Đóng</button>
+            </div>
+
+            <!-- QR BÊN PHẢI -->
+            <div class="menu-right">
+                <img src="./qr.png" class="qr-img">
+            </div>
+        </div>
+    </div>
+</div>
+<Style>
+        #menuModal {
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 18px;
+        width: 90%;
+        max-width: 650px;
+        box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    }
+
+    .menu-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    /* Bên trái chứa toàn bộ menu */
+    .menu-left {
+        width: 65%;
+    }
+
+    /* Bên phải chứa QR */
+    .menu-right {
+        width: 35%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* QR đẹp hơn */
+    .qr-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+</Style>
+
+
+<script>
+const modal = document.getElementById("menuModal");
+const openBtn = document.getElementById("openMenu");
+const closeBtn = document.getElementById("closeMenu");
+
+openBtn.onclick = () => modal.style.display = "flex";
+closeBtn.onclick = () => modal.style.display = "none";
+modal.onclick = e => { if(e.target === modal) modal.style.display = "none" }
+</script>
+
+
 </body>
 </html>
